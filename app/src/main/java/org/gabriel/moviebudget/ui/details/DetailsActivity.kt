@@ -63,7 +63,7 @@ class DetailsActivity : AppCompatActivity(), DetailsContract.View {
         details_placeholder.visibility = View.GONE
 
         detail_title.text = movie.title
-        if (movie.budget != null) {
+        if (movie.budget != null && movie.budget != 0) {
             detail_budget.text = getString(R.string.known_budget, movie.budget)
         } else {
             detail_budget.setText(R.string.unknown_budget)
