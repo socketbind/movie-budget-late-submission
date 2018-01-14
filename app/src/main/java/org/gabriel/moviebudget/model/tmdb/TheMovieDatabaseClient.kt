@@ -3,6 +3,8 @@ package org.gabriel.moviebudget.model.tmdb
 import rx.Observable
 
 interface TheMovieDatabaseClient {
+    fun retrieveConfiguration(): Observable<Configuration>
+
     fun searchMovie(
             query: String,
             language: String? = null,

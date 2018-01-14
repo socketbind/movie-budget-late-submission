@@ -7,6 +7,11 @@ import rx.Observable
 
 interface TheMovieDatabaseService {
 
+    @GET("/3/configuration")
+    fun retrieveConfiguration(
+            @Query("api_key")              apiKey: String
+    ): Observable<Configuration>
+
     @GET("/3/search/movie")
     fun searchMovies(
             @Query("api_key")              apiKey: String,

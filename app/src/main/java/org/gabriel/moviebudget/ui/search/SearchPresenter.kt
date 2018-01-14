@@ -1,6 +1,7 @@
 package org.gabriel.moviebudget.ui.search
 
 import org.gabriel.moviebudget.R
+import org.gabriel.moviebudget.model.tmdb.Configuration
 import org.gabriel.moviebudget.model.tmdb.SearchResults
 import org.gabriel.moviebudget.model.tmdb.TheMovieDatabaseClient
 import rx.android.schedulers.AndroidSchedulers
@@ -12,7 +13,18 @@ class SearchPresenter @Inject constructor(val view: SearchContract.View, val cli
     private val subscriptions = CompositeSubscription()
 
     override fun start() {
+        view.showProgress(R.string.please_wait)
 
+        client.retrieveConfiguration()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {
+                            configuration: Configuration -> view.enableSearch(configuration)
+                        },
+                        {
+                            err -> view.showError(R.string.unable_to_retrieve_configuration)
+                        }
+                )
     }
 
     override fun stop() {
@@ -22,14 +34,14 @@ class SearchPresenter @Inject constructor(val view: SearchContract.View, val cli
     override fun querySubmitted(query: String) {
         val trimmedQuery = query.trim()
 
-        view.clearQueryError()
+        view.clearError()
 
         if (trimmedQuery.length < 3) {
-            view.showQueryError(R.string.must_be_at_least_three_characters)
+            view.showError(R.string.must_be_at_least_three_characters)
             return
         }
 
-        view.showProgress()
+        view.showProgress(R.string.search_in_progress)
 
         val querySubscription = client.searchMovie(trimmedQuery)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -44,9 +56,9 @@ class SearchPresenter @Inject constructor(val view: SearchContract.View, val cli
                         { err ->
                             val message = err.message
                             if (message != null) {
-                                view.showQueryError(R.string.unable_to_retrieve_results, message)
+                                view.showError(R.string.unable_to_retrieve_results, message)
                             } else {
-                                view.showQueryError(R.string.unknown_error)
+                                view.showError(R.string.unknown_error)
                             }
                         }
                 )

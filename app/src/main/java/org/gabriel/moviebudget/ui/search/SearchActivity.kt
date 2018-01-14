@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_search.*
 import org.gabriel.moviebudget.R
+import org.gabriel.moviebudget.model.tmdb.Configuration
 import org.gabriel.moviebudget.model.tmdb.SearchResults
 import org.gabriel.moviebudget.ui.search.items.SearchResultsAdapter
 import org.gabriel.moviebudget.utils.setError
@@ -25,7 +26,7 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
 
     private lateinit var searchView: SearchView
 
-    private val resultsAdapter = SearchResultsAdapter()
+    private lateinit var resultsAdapter: SearchResultsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,6 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         search_results.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@SearchActivity)
-            adapter = resultsAdapter
         }
 
         scope = Toothpick.openScopes(application, this)
@@ -53,6 +53,7 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 presenter.querySubmitted(query)
+                searchView.clearFocus()
                 return true
             }
 
@@ -60,6 +61,7 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         })
 
         searchView.maxWidth = Integer.MAX_VALUE
+        searchView.isEnabled = false
 
         return true
     }
@@ -89,8 +91,8 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         resultsAdapter.replaceItems(results.results)
     }
 
-    override fun showProgress() {
-        placeholder_text.setText(R.string.search_in_progress)
+    override fun showProgress(progressRes: Int) {
+        placeholder_text.setText(progressRes)
         placeholder_text.visibility = View.VISIBLE
         search_results.visibility = View.INVISIBLE
     }
@@ -101,11 +103,19 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         search_results.visibility = View.INVISIBLE
     }
 
-    override fun showQueryError(errorRes: Int, vararg formatArgs: Any) {
+    override fun showError(errorRes: Int, vararg formatArgs: Any) {
         searchView.setError(errorRes, formatArgs)
     }
 
-    override fun clearQueryError() {
+    override fun clearError() {
         searchView.setError(null)
+    }
+
+    override fun enableSearch(configuration: Configuration) {
+        placeholder_text.setText(R.string.use_top_search)
+        searchView.isEnabled = true
+
+        resultsAdapter = SearchResultsAdapter("${configuration.images.baseUrl}/w500/")
+        search_results.adapter = resultsAdapter
     }
 }

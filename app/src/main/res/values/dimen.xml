@@ -2,7 +2,9 @@
 <resources>
 
     <dimen name="search_result_text_margin">16dp</dimen>
-    <dimen name="search_result_poster_width">40dp</dimen>
-    <dimen name="search_result_poster_height">40dp</dimen>
+    <dimen name="search_result_picture_divider_margin">8dp</dimen>
+    <dimen name="search_result_height">64dp</dimen>
+    <dimen name="search_result_poster_width">64dp</dimen>
+    <dimen name="search_result_poster_height">64dp</dimen>
 
 </resources>

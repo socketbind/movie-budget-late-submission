@@ -4,11 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_search_result.view.*
 import org.gabriel.moviebudget.R
 import org.gabriel.moviebudget.model.tmdb.Result
 
-class SearchResultsAdapter : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
+class SearchResultsAdapter(val imagesBaseUrl: String) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
 
     private var items = listOf<Result>()
 
@@ -21,6 +22,12 @@ class SearchResultsAdapter : RecyclerView.Adapter<SearchResultsAdapter.ViewHolde
         val item = items[position]
 
         holder.title.text = item.title
+
+        if (item.posterPath != null && item.posterPath.isNotBlank()) {
+            Picasso.with(holder.itemView.context).load("$imagesBaseUrl/${item.posterPath}").into(holder.poster)
+        } else {
+            holder.poster.setImageBitmap(null)
+        }
     }
 
     override fun getItemId(position: Int): Long {
