@@ -49,7 +49,7 @@ public class Movie {
     @JsonProperty("belongs_to_collection")
     private Object belongsToCollection;
     @JsonProperty("budget")
-    private int budget;
+    private Integer budget;
     @JsonProperty("genres")
     private List<Genre> genres = null;
     @JsonProperty("homepage")
@@ -126,7 +126,7 @@ public class Movie {
     }
 
     @JsonProperty("budget")
-    public int getBudget() {
+    public Integer getBudget() {
         return budget;
     }
 

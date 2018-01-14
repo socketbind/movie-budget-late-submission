@@ -16,11 +16,13 @@ interface SearchContract {
 
         fun clearError()
 
-        fun showError(@StringRes errorRes: Int, vararg formatArgs: Any)
-
         fun showProgress(@StringRes progressRes: Int)
 
+        fun showError(@StringRes errorRes: Int, vararg formatArgs: Any)
+
         fun showNoResults()
+
+        fun navigateToDetails(movieId: Int)
 
     }
 

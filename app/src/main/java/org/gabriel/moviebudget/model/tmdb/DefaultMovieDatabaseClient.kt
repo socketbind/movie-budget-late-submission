@@ -28,7 +28,7 @@ class DefaultMovieDatabaseClient @Inject constructor(@TmdbApiKey val apiKey: Str
             = service.searchMovies(apiKey, query, language, page, includeAdult, region, year, primaryReleaseYear)
             .subscribeOn(Schedulers.io())
 
-    override fun movieDetails(id: String, language: String?, appendToResponse: String?)
-            = service.movieDetails(apiKey, id, language, appendToResponse)
+    override fun movieDetails(id: Int, language: String?, appendToResponse: String?)
+            = service.movieDetails(id, apiKey, language, appendToResponse)
             .subscribeOn(Schedulers.io())
 }

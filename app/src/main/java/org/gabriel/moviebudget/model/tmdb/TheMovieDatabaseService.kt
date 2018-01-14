@@ -26,8 +26,8 @@ interface TheMovieDatabaseService {
 
     @GET("/3/movie/{id}")
     fun movieDetails(
+            @Path("id")                     id: Int,
             @Query("api_key")                apiKey: String,
-            @Path("id")                     id: String,
             @Query("language")              language: String? = null,
             @Query("append_to_response")    appendToResponse: String? = null
     ): Observable<Movie>

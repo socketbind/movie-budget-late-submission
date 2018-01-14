@@ -1,5 +1,6 @@
 package org.gabriel.moviebudget.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 import org.gabriel.moviebudget.R
 import org.gabriel.moviebudget.model.tmdb.Configuration
 import org.gabriel.moviebudget.model.tmdb.SearchResults
+import org.gabriel.moviebudget.ui.details.DetailsActivity
 import org.gabriel.moviebudget.ui.search.items.SearchResultsAdapter
 import org.gabriel.moviebudget.utils.setError
 import toothpick.Scope
@@ -43,6 +45,8 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
                 SearchModule(this)
         )
         Toothpick.inject(this, scope)
+
+        presenter.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,20 +70,10 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         return true
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        presenter.start()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        presenter.stop()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+
+        presenter.stop()
 
         Toothpick.closeScope(this)
     }
@@ -104,7 +98,7 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
     }
 
     override fun showError(errorRes: Int, vararg formatArgs: Any) {
-        searchView.setError(errorRes, formatArgs)
+        searchView.setError(errorRes, *formatArgs)
     }
 
     override fun clearError() {
@@ -118,4 +112,11 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
         resultsAdapter = SearchResultsAdapter("${configuration.images.baseUrl}/w500/")
         search_results.adapter = resultsAdapter
     }
+
+    override fun navigateToDetails(movieId: Int) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra(DetailsActivity.MOVIE_ID_KEY, movieId)
+        startActivity(intent)
+    }
+
 }

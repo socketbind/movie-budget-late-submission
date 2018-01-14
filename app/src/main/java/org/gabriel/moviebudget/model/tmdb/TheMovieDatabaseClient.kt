@@ -16,7 +16,7 @@ interface TheMovieDatabaseClient {
     ): Observable<SearchResults>
 
     fun movieDetails(
-            id: String,
+            id: Int,
             language: String? = null,
             appendToResponse: String? = null
     ): Observable<Movie>

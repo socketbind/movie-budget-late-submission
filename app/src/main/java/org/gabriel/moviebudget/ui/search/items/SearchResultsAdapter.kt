@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_search_result.view.*
 import org.gabriel.moviebudget.R
 import org.gabriel.moviebudget.model.tmdb.Result
+import org.gabriel.moviebudget.ui.search.SearchContract
 
 class SearchResultsAdapter(val imagesBaseUrl: String) : RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>() {
 
@@ -20,6 +21,8 @@ class SearchResultsAdapter(val imagesBaseUrl: String) : RecyclerView.Adapter<Sea
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+
+        holder.movieId = item.id
 
         holder.title.text = item.title
 
@@ -43,8 +46,17 @@ class SearchResultsAdapter(val imagesBaseUrl: String) : RecyclerView.Adapter<Sea
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        var movieId: Int = 0
         val poster = itemView.result_poster
         val title = itemView.result_title
+
+        init {
+            itemView.setOnClickListener {
+                (itemView.context as? SearchContract.View)?.apply {
+                    navigateToDetails(movieId)
+                }
+            }
+        }
 
     }
 

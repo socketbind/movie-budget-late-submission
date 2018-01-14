@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/search_result_height">
+    android:layout_height="@dimen/search_result_height"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/result_poster"

@@ -29,6 +29,7 @@ class SearchPresenter @Inject constructor(val view: SearchContract.View, val cli
 
     override fun stop() {
         subscriptions.unsubscribe()
+        subscriptions.clear()
     }
 
     override fun querySubmitted(query: String) {
