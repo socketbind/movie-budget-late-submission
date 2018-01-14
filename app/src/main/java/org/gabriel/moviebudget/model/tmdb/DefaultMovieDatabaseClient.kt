@@ -11,16 +11,10 @@ import javax.inject.Inject
 
 class DefaultMovieDatabaseClient @Inject constructor(@TmdbApiKey val apiKey: String) : TheMovieDatabaseClient {
 
-    /*private val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }).build()*/
-
     private val retrofit = Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org")
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(JacksonConverterFactory.create())
-            //.client(client)
             .build()
 
     private val service: TheMovieDatabaseService = retrofit.create(TheMovieDatabaseService::class.java)
