@@ -1,0 +1,31 @@
+package org.gabriel.moviebudget.model.tmdb
+
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+import rx.Observable
+
+interface TheMovieDatabaseService {
+
+    @GET("/search/movie")
+    fun searchMovies(
+            @Query("api_key")             apiKey: String,
+            @Query("query")              query: String,
+            @Query("language")           language: String? = null,
+            @Query("page")               page: Int? = null,
+            @Query("include_adult")       includeAdult: Boolean? = null,
+            @Query("region")             region: String? = null,
+            @Query("year")               year: Int? = null,
+            @Query("primary_release_year") primaryReleaseYear: Int? = null
+    ): Observable<SearchResults>
+
+    @GET("/movie/{id}")
+    fun movieDetails(
+            @Query("api_key")                apiKey: String,
+            @Path("id")                     id: String,
+            @Query("language")              language: String? = null,
+            @Query("append_to_response")    appendToResponse: String? = null
+    ): Observable<Movie>
+
+}
+
