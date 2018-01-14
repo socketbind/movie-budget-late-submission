@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/result_poster"
+        android:layout_width="@dimen/search_result_poster_width"
+        android:layout_height="@dimen/search_result_poster_height"
+        />
+
+    <TextView
+        android:id="@+id/result_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/search_result_text_margin"
+        android:layout_weight="1"
+        tools:text="The Matrix"/>
+
+</LinearLayout>

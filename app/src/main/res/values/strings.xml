@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Movie Budget</string>
+    <string name="search">Search</string>
+
+    <string name="must_be_at_least_three_characters">Must be at least three characters.</string>
+
+    <string name="unable_to_retrieve_results">Unable to retrieve results:\n%1$s</string>
+    <string name="unknown_error">Unknown error</string>
+
+    <string name="use_top_search">Touch the magnifier to enter your query.</string>
+    <string name="search_in_progress">Searching…</string>
+    <string name="no_results">No results.</string>
+
 </resources>
